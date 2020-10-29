@@ -5,13 +5,12 @@ export const taskReducer = (state = [], action) => {
 
     case 'delete':
       return state.filter(task => task.id !== action.payload);
-    case 'toggle':
+    case 'done':
       return state.map(task =>
-        task.id === action.payload ? { ...task, done: !task.done } : task
+        task.id === action.payload ? { ...task, done: true} : task
       );
     case 'start':
-      return state.map(task =>
-        task.id === action.payload ? { ...task, current: !task.current } : task
+      return state.map(task =>  task.id === action.payload ? { ...task, current: !task.current } : task
       );
 
     default:

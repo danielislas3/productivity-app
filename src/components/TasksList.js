@@ -4,9 +4,9 @@ import { TaskListItem } from './TaskListItem';
 
 export const TasksList = () => {
   const { tasks, dispatch } = useContext(TaskContext);
-  const handleToggle = taskId => {
+  const handleDone = taskId => {
     dispatch({
-      type: 'toggle',
+      type: 'done',
       payload: taskId,
     });
   };
@@ -33,7 +33,7 @@ export const TasksList = () => {
             task={todo}
             index={i}
             handleDelete={handleDelete}
-            handleToggle={handleToggle}
+            handleDone={handleDone}
             handleStart={handleStart}
           />
         ))

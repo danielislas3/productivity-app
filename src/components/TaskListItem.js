@@ -1,12 +1,18 @@
 import React from 'react';
+import Badge from 'react-bootstrap/Badge';
 
-export const TaskListItem = ({ task, handleDelete, handleToggle, handleStart,index }) => {
+export const TaskListItem = ({task,handleDelete,handleDone, handleStart, index,}) => {
   return (
-    
     <li key={task.id} className='list-group-item list-group-flush'>
+      {task.done && (
+        <Badge className='float-right' variant='success'>
+          Success
+        </Badge>
+      )}
+
       <p
         className={`${task.done && 'complete'}`}
-        onClick={() => handleToggle(task.id)}>
+        onClick={() => handleDone(task.id)}>
         {index + 1}.-{task.name} <br />
         {task.description}
       </p>
@@ -22,7 +28,7 @@ export const TaskListItem = ({ task, handleDelete, handleToggle, handleStart,ind
           handleStart(task.id);
         }}
         className='btn btn-primary'>
-        {task.current?'Parar':'Iniciar'}
+        {task.current ? 'Parar' : 'Iniciar'}
       </button>
     </li>
   );

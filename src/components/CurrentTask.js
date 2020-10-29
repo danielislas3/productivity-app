@@ -19,9 +19,9 @@ export const CurrentTask = () => {
   );
 
   //al completar la tarea
-  const handleToggle = () => {
+  const handleDone = () => {
     dispatch({
-      type: 'toggle',
+      type: 'done',
       payload: currentTask.id,
     });
   };
@@ -50,7 +50,7 @@ export const CurrentTask = () => {
             </div>
           </div>
           <p>
-            <Button variant='primary' onClick={handleToggle}>
+            <Button variant='primary' onClick={handleDone}>
               Terminar
             </Button>
           </p>

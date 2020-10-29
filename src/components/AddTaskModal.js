@@ -7,7 +7,7 @@ import { useForm } from '../hooks/useForm';
 import { TaskContext } from '../helpers/TaskContext';
 
 export const AddTaskModal = props => {
-  const { tasks,dispatch } = useContext(TaskContext);
+  const { dispatch } = useContext(TaskContext);
 
 
   const [newTask, handleInputChange, clear] = useForm({
@@ -19,8 +19,9 @@ export const AddTaskModal = props => {
     done:false,
     hor: '',
     min: '',
-    current:true
+    current:false
   });
+  
   const handleAddTask = newTask => {
     dispatch({
       type: 'add',
@@ -34,10 +35,6 @@ export const AddTaskModal = props => {
     newTask.type === 'personal' && setPersonalTimer(true);
   }, [newTask.type]);
 
-  //   useEffect(() => {
-  //   localStorage.setItem('tasks', JSON.stringify(tasks));
-  // }, [tasks]);
-  
   const handleCrear = () => {
     props.onHide();
     handleAddTask(newTask);
