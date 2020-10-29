@@ -8,15 +8,15 @@ import {
   faPause,
   faStop,
 } from '@fortawesome/free-solid-svg-icons';
-export const CurrentTask = () => {
+export const CurrentTask = ({task}) => {
   return (
     <Jumbotron>
       <h4>
-        CurrentTask
         <FontAwesomeIcon className='ml-3' icon={faCoffee} />
       </h4>
       <div className='d-flex flex-row justify-content-md-around'>
-        <h5>Tarea</h5>
+        {/* <h5>{task.name}</h5>
+        <h5>{task.desciption}</h5> */}
         <span>1:45:02</span>
         <div>
           <FontAwesomeIcon className='ml-3 cursor-pointer' icon={faPlay} />

@@ -1,35 +1,47 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import { useForm } from '../hooks/useForm';
+import { TaskContext } from '../helpers/TaskContext';
 
 export const AddTaskModal = props => {
-  const [
-    { name, description, duration, type,hor,min },
-    handleInputChange,
-    clear,
-  ] = useForm({
+  const { tasks,dispatch } = useContext(TaskContext);
+  console.log(tasks);
+
+  const [newTask, handleInputChange, clear] = useForm({
+    id: new Date().getTime(),
     name: '',
     description: '',
     duration: '',
     type: '',
-    hor:'',
-    min:'',
+    done:false,
+    hor: '',
+    min: '',
   });
+  const handleAddTask = newTask => {
+    dispatch({
+      type: 'add',
+      payload: newTask,
+    });
+  };
   const [personalTimer, setPersonalTimer] = useState(false);
 
   //detecta si se utiliza el select para setear el tiempo de la tarea
   useEffect(() => {
-    type === 'personal' && setPersonalTimer(true);
-  }, [type]);
+    newTask.type === 'personal' && setPersonalTimer(true);
+  }, [newTask.type]);
 
+  //   useEffect(() => {
+  //   localStorage.setItem('tasks', JSON.stringify(tasks));
+  // }, [tasks]);
+  
   const handleCrear = () => {
-    console.log('====================================');
-    console.log(name, description, duration, type,hor,min );
-    console.log('====================================');
     props.onHide();
+    handleAddTask(newTask);
+
+    clear();
   };
 
   return (
@@ -47,7 +59,7 @@ export const AddTaskModal = props => {
               name='name'
               className='form-control'
               placeholder='Nombre'
-              value={name}
+              value={newTask.name}
               onChange={handleInputChange}
             />
             <input
@@ -55,7 +67,7 @@ export const AddTaskModal = props => {
               name='description'
               className='form-control ml-2'
               placeholder='Descripcion'
-              value={description}
+              value={newTask.description}
               onChange={handleInputChange}
             />
           </Row>
@@ -69,7 +81,7 @@ export const AddTaskModal = props => {
                   min='0'
                   max='2'
                   name='hor'
-                  value={hor}
+                  value={newTask.hor}
                   onChange={handleInputChange}
                 />
                 <input
@@ -79,7 +91,7 @@ export const AddTaskModal = props => {
                   min='0'
                   max='59'
                   name='min'
-                  value={min}
+                  value={newTask.min}
                   onChange={handleInputChange}
                 />
               </>
@@ -87,7 +99,7 @@ export const AddTaskModal = props => {
               <select
                 name='type'
                 className='custom-select'
-                value={type}
+                value={newTask.type}
                 onChange={handleInputChange}>
                 <option value='DEFAULT'>Duración...</option>
                 <option value='corta'>Corta</option>
