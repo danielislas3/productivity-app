@@ -8,7 +8,7 @@ import { TaskContext } from '../helpers/TaskContext';
 
 export const AddTaskModal = props => {
   const { tasks,dispatch } = useContext(TaskContext);
-  console.log(tasks);
+
 
   const [newTask, handleInputChange, clear] = useForm({
     id: new Date().getTime(),
@@ -19,6 +19,7 @@ export const AddTaskModal = props => {
     done:false,
     hor: '',
     min: '',
+    current:true
   });
   const handleAddTask = newTask => {
     dispatch({

@@ -9,6 +9,10 @@ export const taskReducer = (state = [], action) => {
       return state.map(task =>
         task.id === action.payload ? { ...task, done: !task.done } : task
       );
+    case 'start':
+      return state.map(task =>
+        task.id === action.payload ? { ...task, current: !task.current } : task
+      );
 
     default:
       return state;

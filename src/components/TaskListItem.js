@@ -1,7 +1,8 @@
 import React from 'react';
 
-export const TaskListItem = ({ task, handleDelete, handleToggle, index }) => {
+export const TaskListItem = ({ task, handleDelete, handleToggle, handleStart,index }) => {
   return (
+    
     <li key={task.id} className='list-group-item list-group-flush'>
       <p
         className={`${task.done && 'complete'}`}
@@ -15,6 +16,13 @@ export const TaskListItem = ({ task, handleDelete, handleToggle, index }) => {
         }}
         className='btn btn-danger'>
         Borrar
+      </button>
+      <button
+        onClick={() => {
+          handleStart(task.id);
+        }}
+        className='btn btn-primary'>
+        {task.current?'Parar':'Iniciar'}
       </button>
     </li>
   );

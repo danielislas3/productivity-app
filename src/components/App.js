@@ -13,20 +13,24 @@ const init = () => {
 
 export const App = () => {
   const [tasks, dispatch] = useReducer(taskReducer, [], init);
+  // const currenTask = tasks.filter(task => task.current === true)[0];
 
   useEffect(() => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   }, [tasks]);
+
   const context = {
     tasks,
     dispatch,
+    
   };
+
   return (
     <TaskContext.Provider value={context}>
       <div className='container mt-4'>
         <h1>Aplicación de productividad</h1>
         <NavBar />
-        <CurrentTask/>
+        <CurrentTask  />
         <TasksList />
       </div>
     </TaskContext.Provider>

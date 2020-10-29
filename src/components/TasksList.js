@@ -17,6 +17,13 @@ export const TasksList = () => {
     };
     dispatch(action);
   };
+  const handleStart = taskId => {
+    const action = {
+      type: 'start',
+      payload: taskId,
+    };
+    dispatch(action);
+  };
   return (
     <ul>
       {tasks.length > 0 ? (
@@ -27,6 +34,7 @@ export const TasksList = () => {
             index={i}
             handleDelete={handleDelete}
             handleToggle={handleToggle}
+            handleStart={handleStart}
           />
         ))
       ) : (
