@@ -18,11 +18,11 @@ export const TasksList = () => {
     dispatch(action);
   };
   const handleStart = taskId => {
-    const action = {
+
+    dispatch({
       type: 'start',
       payload: taskId,
-    };
-    dispatch(action);
+    });
   };
   return (
     <ul>
@@ -35,6 +35,7 @@ export const TasksList = () => {
             handleDelete={handleDelete}
             handleDone={handleDone}
             handleStart={handleStart}
+            tasks={tasks}
           />
         ))
       ) : (
