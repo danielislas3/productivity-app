@@ -12,6 +12,7 @@ import { TaskContext } from '../helpers/TaskContext';
 import Countdown from 'react-countdown';
 
 export const CurrentTask = () => {
+  let prueba = {};
   //referencias para controlar el timer
   const refTimer = useRef();
 
@@ -21,6 +22,9 @@ export const CurrentTask = () => {
   const [currentTask, setCurrentTask] = useState(
     tasks.filter(task => task.current === true)[0]
   );
+  const [minutes, setMinutes] = useState(currentTask.min);
+  const [hours, setHours] = useState(currentTask.hor);
+  const [seconds, setSeconds] = useState(0);
 
   //al completar la tarea
   const handleDone = () => {
@@ -29,6 +33,18 @@ export const CurrentTask = () => {
       payload: currentTask.id,
     });
   };
+  //actualiza el tiempo en la tarea
+  const handleUpdate = (min, hor, sec) => {
+    dispatch({
+      type: 'done',
+      payload: {
+        min,
+        hor,
+        sec,
+      },
+    });
+  };
+
   //detecta si hay una nueva tarea como principal y la setea al estado
   useEffect(() => {
     setCurrentTask(tasks.filter(task => task.current === true)[0]);
@@ -36,9 +52,11 @@ export const CurrentTask = () => {
 
   const handlePlay = () => {
     refTimer.current.start();
+ 
   };
 
   const handlePause = () => {
+    // handleUpdate(prueba.minutes,prueba.hours, prueba.seconds);
     refTimer.current.pause();
   };
 
@@ -46,9 +64,8 @@ export const CurrentTask = () => {
     refTimer.current.stop();
   };
   const renderer = ({ hours, minutes, seconds, completed }) => {
-    console.log('====================================');
-    console.log( hours, minutes, seconds,completed);
-    console.log('====================================');
+    prueba = { minutes, hours, seconds };
+
     if (completed) {
       // Render de tarea completada
       handleDone();
