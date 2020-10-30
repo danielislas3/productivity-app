@@ -8,10 +8,45 @@ export const useForm = (initialState = {}) => {
   };
 
   const handleInputChange = ({ target }) => {
-    setValues({
-      ...values,
-      [target.name]: target.value,
-    });
+    if (target.type == 'select-one') {
+      typeToTime(target.value);
+      setValues({
+        ...values,
+        [target.name]: target.value,
+        min: typeToTime(target.value).min,
+        hor: typeToTime(target.value).hor,
+      });
+    } else {
+      setValues({
+        ...values,
+        [target.name]: target.value,
+      });
+    }
+  };
+  const typeToTime = type => {
+    let hor, min;
+    switch (type) {
+      case 'corta':
+        hor = 0;
+        min = 30;
+        break;
+      case 'media':
+        hor = 0;
+        min = 30;
+        break;
+      case 'larga':
+        hor = 0;
+        min = 30;
+        break;
+
+      default:
+        break;
+    }
+
+    return {
+      hor,
+      min,
+    };
   };
 
   return [values, handleInputChange, reset];

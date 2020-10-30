@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import Jumbotron from 'react-bootstrap/Jumbotron';
 import Button from 'react-bootstrap/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,8 +9,12 @@ import {
   faStop,
 } from '@fortawesome/free-solid-svg-icons';
 import { TaskContext } from '../helpers/TaskContext';
+import Countdown from 'react-countdown';
 
 export const CurrentTask = () => {
+  //referencias para controlar el timer
+  const refTimer = useRef();
+
   //traigo todas las tareas dle contexto
   const { tasks, dispatch } = useContext(TaskContext);
   //creo un estado con la tarea actual
@@ -30,6 +34,32 @@ export const CurrentTask = () => {
     setCurrentTask(tasks.filter(task => task.current === true)[0]);
   }, [tasks]);
 
+  const handlePlay = () => {
+    refTimer.current.start();
+  };
+
+  const handlePause = () => {
+    refTimer.current.pause();
+  };
+
+  const handleStop = () => {
+    refTimer.current.stop();
+  };
+  const renderer = ({ hours, minutes, seconds, completed }) => {
+    if (completed) {
+      // Render de tarea completada
+      handleDone();
+      return <h1>Esta tarea ha sido completada</h1>;
+    } else {
+      // Contador
+      return (
+        <span>
+          {hours}:{minutes}:{seconds}dfgdfg
+        </span>
+      );
+    }
+  };
+
   return (
     <Jumbotron>
       {!currentTask ? (
@@ -44,9 +74,24 @@ export const CurrentTask = () => {
             <h5>{currentTask.description}</h5>
             <span>1:45:02</span>
             <div>
-              <FontAwesomeIcon className='ml-3 cursor-pointer' icon={faPlay} />
-              <FontAwesomeIcon className='ml-3 cursor-pointer' icon={faPause} />
-              <FontAwesomeIcon className='ml-3 cursor-pointer' icon={faStop} />
+              <FontAwesomeIcon
+                className='ml-3 cursor-pointer'
+                icon={faPlay}
+                onClick={handlePlay}
+              />
+              <FontAwesomeIcon
+                className='ml-3 cursor-pointer'
+                icon={faPause}
+                onClick={() => {
+                  handlePause();
+                }}
+              />
+
+              <FontAwesomeIcon
+                className='ml-3 cursor-pointer'
+                icon={faStop}
+                onClick={handleStop}
+              />
             </div>
           </div>
           <p>
@@ -56,6 +101,13 @@ export const CurrentTask = () => {
           </p>
         </>
       )}
+      <Countdown
+        date={Date.now() + 10000}
+        renderer={renderer}
+        ref={refTimer}
+        autoStart={false}
+        controlled={false}
+      />
     </Jumbotron>
   );
 };
