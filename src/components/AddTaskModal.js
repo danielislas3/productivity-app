@@ -9,19 +9,18 @@ import { TaskContext } from '../helpers/TaskContext';
 export const AddTaskModal = props => {
   const { dispatch } = useContext(TaskContext);
 
-
   const [newTask, handleInputChange, clear] = useForm({
     id: new Date().getTime(),
     name: '',
     description: '',
     duration: '',
     type: '',
-    done:false,
+    done: false,
     hor: '',
     min: '',
-    current:false
+    current: false,
   });
-  
+
   const handleAddTask = newTask => {
     dispatch({
       type: 'add',
@@ -39,6 +38,10 @@ export const AddTaskModal = props => {
     props.onHide();
     handleAddTask(newTask);
 
+    clear();
+  };
+  const handleCancel = () => {
+    props.onHide();
     clear();
   };
 
@@ -110,7 +113,7 @@ export const AddTaskModal = props => {
         </Container>
       </Modal.Body>
       <Modal.Footer>
-        <Button variant='outline-danger' onClick={props.onHide}>
+        <Button variant='outline-danger' onClick={handleCancel}>
           Cancelar
         </Button>
         <Button variant='success' onClick={handleCrear}>

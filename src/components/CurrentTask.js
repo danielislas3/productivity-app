@@ -46,6 +46,9 @@ export const CurrentTask = () => {
     refTimer.current.stop();
   };
   const renderer = ({ hours, minutes, seconds, completed }) => {
+    console.log('====================================');
+    console.log( hours, minutes, seconds,completed);
+    console.log('====================================');
     if (completed) {
       // Render de tarea completada
       handleDone();
@@ -54,7 +57,7 @@ export const CurrentTask = () => {
       // Contador
       return (
         <span>
-          {hours}:{minutes}:{seconds}dfgdfg
+          {hours}:{minutes}:{seconds}
         </span>
       );
     }
@@ -102,7 +105,7 @@ export const CurrentTask = () => {
         </>
       )}
       <Countdown
-        date={Date.now() + 10000}
+        date={Date.now() + currentTask.duration}
         renderer={renderer}
         ref={refTimer}
         autoStart={false}
